@@ -14,7 +14,7 @@ services:
       - '8080:8080'
     depends_on:
       - db
-    restart: unless-stopped
+    restart: service_healthy
     environment:
       - DB_HOST=db
       - DB_PORT=3306
@@ -26,9 +26,6 @@ services:
 
   db:
     image: mysql:8.0
-    build:
-      context: .
-      dockerfile: Dockerfile.mysql
     container_name: todoapp-db
     ports:
       - '3306:3306'
