@@ -25,6 +25,7 @@ services:
       - todoapp-network
 
   db:
+    image: mysql:8.0
     build:
       context: .
       dockerfile: Dockerfile.mysql
@@ -38,6 +39,13 @@ services:
       - MYSQL_DATABASE=app_db
       - MYSQL_USER=app_user
       - MYSQL_PASSWORD=1234
+    healthcheck:
+      test:
+        ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-p1234']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
     networks:
       - todoapp-network
 
